@@ -7,16 +7,15 @@ import { useEffect, useState, useRef } from 'react';
 
 // Partners array with external image URLs - using more reliable image sources
 const partners = [
-  { id: 1, name: 'SteelSeries', logo: 'https://www.nicepng.com/png/full/209-2090230_steelseries-logo-png.png', url: 'https://steelseries.com' },
-  { id: 2, name: 'Razer', logo: 'https://th.bing.com/th/id/R.e1488c78afe9b541fc6a16181da96a56?rik=lgGOp1ZNGKgGLg&riu=http%3a%2f%2fwww.pngmart.com%2ffiles%2f4%2fRazer-Logo-PNG-Pic.png&ehk=lor4sKNV1nGW0Ogm66jdxBzYLl3yeqasRyWCWI2SMqA%3d&risl=&pid=ImgRaw&r=0', url: 'https://razer.com' },
-  { id: 3, name: 'Intel', logo: 'https://th.bing.com/th/id/R.2ddd0850b2d6d102621f42a2175b34f7?rik=rbgZxZltc17%2fSg&riu=http%3a%2f%2fdwglogo.com%2fwp-content%2fuploads%2f2016%2f05%2fIntel_logo.png&ehk=GUcGADvaMF%2fY9NhzqfWqMRqKqsbcl%2bU3euW%2b448cL7k%3d&risl=&pid=ImgRaw&r=0', url: 'https://intel.com' },
-  { id: 4, name: 'Nvidia', logo: 'https://static.vecteezy.com/system/resources/previews/024/039/095/non_2x/nvidia-logo-transparent-free-png.png', url: 'https://nvidia.com' },
-  { id: 5, name: 'HyperX', logo: 'https://static.gtri.be/img/logos/hyper-x-w.png', url: 'https://hyperx.com' },
-  { id: 6, name: 'Red Bull', logo: 'https://th.bing.com/th/id/R.0bfb682d3a786c68ffd1c64213f99fe5?rik=PQ3Kbu0RxJemCg&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fred-bull-logo-png-png-2272x1704-red-bull-logo-background-2272.png&ehk=OcXuwt9A2e6xgmWA4e5U9Gu6bVo2GgUCynxtbnrFE0s%3d&risl=&pid=ImgRaw&r=0', url: 'https://redbull.com' },
-  { id: 7, name: 'Monster Energy', logo: 'https://static.vecteezy.com/system/resources/previews/027/127/428/non_2x/monster-energy-logo-monster-energy-icon-transparent-free-png.png', url: 'https://monsterenergy.com' },
-  { id: 8, name: 'Logitech', logo: 'https://logosmarcas.net/wp-content/uploads/2020/11/Logitech-Emblema.png', url: 'https://logitech.com' },
-  { id: 9, name: 'Corsair', logo: 'https://logos-world.net/wp-content/uploads/2023/01/Corsair-Logo.png', url: 'https://corsair.com' },
-  { id: 10, name: 'Alienware', logo: 'https://clipground.com/images/logo-alienware-png-5.png', url: 'https://alienware.com' },
+  { id: 1, name: 'Razer', logo: 'https://th.bing.com/th/id/R.e1488c78afe9b541fc6a16181da96a56?rik=lgGOp1ZNGKgGLg&riu=http%3a%2f%2fwww.pngmart.com%2ffiles%2f4%2fRazer-Logo-PNG-Pic.png&ehk=lor4sKNV1nGW0Ogm66jdxBzYLl3yeqasRyWCWI2SMqA%3d&risl=&pid=ImgRaw&r=0', url: 'https://razer.com' },
+  { id: 2, name: 'Intel', logo: 'https://th.bing.com/th/id/R.2ddd0850b2d6d102621f42a2175b34f7?rik=rbgZxZltc17%2fSg&riu=http%3a%2f%2fdwglogo.com%2fwp-content%2fuploads%2f2016%2f05%2fIntel_logo.png&ehk=GUcGADvaMF%2fY9NhzqfWqMRqKqsbcl%2bU3euW%2b448cL7k%3d&risl=&pid=ImgRaw&r=0', url: 'https://intel.com' },
+  { id: 3, name: 'Nvidia', logo: 'https://static.vecteezy.com/system/resources/previews/024/039/095/non_2x/nvidia-logo-transparent-free-png.png', url: 'https://nvidia.com' },
+  { id: 4, name: 'HyperX', logo: 'https://static.gtri.be/img/logos/hyper-x-w.png', url: 'https://hyperx.com' },
+  { id: 5, name: 'Red Bull', logo: 'https://th.bing.com/th/id/R.0bfb682d3a786c68ffd1c64213f99fe5?rik=PQ3Kbu0RxJemCg&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fred-bull-logo-png-png-2272x1704-red-bull-logo-background-2272.png&ehk=OcXuwt9A2e6xgmWA4e5U9Gu6bVo2GgUCynxtbnrFE0s%3d&risl=&pid=ImgRaw&r=0', url: 'https://redbull.com' },
+  { id: 6, name: 'Monster Energy', logo: 'https://static.vecteezy.com/system/resources/previews/027/127/428/non_2x/monster-energy-logo-monster-energy-icon-transparent-free-png.png', url: 'https://monsterenergy.com' },
+  { id: 7, name: 'Logitech', logo: 'https://logosmarcas.net/wp-content/uploads/2020/11/Logitech-Emblema.png', url: 'https://logitech.com' },
+  { id: 8, name: 'Corsair', logo: 'https://logos-world.net/wp-content/uploads/2023/01/Corsair-Logo.png', url: 'https://corsair.com' },
+  { id: 9, name: 'Alienware', logo: 'https://clipground.com/images/logo-alienware-png-5.png', url: 'https://alienware.com' },
 ];
 
 const PartnersMarquee: React.FC = () => {
@@ -55,7 +54,7 @@ const PartnersMarquee: React.FC = () => {
   }
 
   return (
-    <section className="bg-black py-16  px-4 md:px-8 md:ml-0 lg:ml-16 xl:ml-64">
+    <section className="bg-black px-4 md:px-8 md:ml-0 lg:ml-16 xl:ml-64">
         <div className="max-w-6xl mx-auto" ref={containerRef}>
         {/* Section title - matching games showcase style */}
         <div className="mb-8">

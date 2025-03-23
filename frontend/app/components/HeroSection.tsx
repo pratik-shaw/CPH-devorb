@@ -6,17 +6,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 // Image data with external URLs
 const carouselImages = [
   {
-    src: "https://cf-img.fnatic.com/cdn-cgi/image/dpr=1,fit=contain,format=auto,height=1560,width=1536,trim=0;1233;0;1234/https://cdn.sanity.io/images/5gii1snx/production/fdeb19681ef7ee48944066c4e831a9cc9d42309f-7407x4940.jpg",
+    src: "https://theesports.club/_next/image?url=https%3A%2F%2Fcdn.theesports.club%2FEvent%2520Website%2520Home%2520Banner%2520%25283%2529-e842f0dd-3cb1-4608-9e08-b9036277679c.png&w=3840&q=75",
     alt: "Professional esports tournament arena",
     url: "https://example.com/tournaments"
   },
   {
-    src: "https://criticalphoenix.in/public/yearlygraph.png",
+    src: "https://theesports.club/_next/image?url=https%3A%2F%2Fcdn.theesports.club%2F1000142736-183a8529-d931-4024-bf2e-0250c6574eae.png&w=3840&q=75",
     alt: "Competitive gaming team",
     url: "https://example.com/teams"
   },
   {
-    src: "https://criticalphoenix.in/public/image@2x.png",
+    src: "https://theesports.club/_next/image?url=https%3A%2F%2Fcdn.theesports.club%2FMain%2520Banner-af392227-cd12-46f4-8bec-93fd949f2126.png&w=3840&q=75",
     alt: "Gaming peripherals and setup",
     url: "https://example.com/gear"
   },
@@ -26,7 +26,7 @@ const carouselImages = [
     url: "https://example.com/events"
   },
   {
-    src: "https://criticalphoenix.in/public/image@2x.png",
+    src: "https://theesports.club/_next/image?url=https%3A%2F%2Fcdn.theesports.club%2F1000142736-183a8529-d931-4024-bf2e-0250c6574eae.png&w=3840&q=75",
     alt: "Gaming strategic planning",
     url: "https://example.com/strategies"
   }
@@ -64,9 +64,9 @@ const HeroSection = () => {
   }
 
   return (
-    <section className="relative h-screen overflow-hidden ml-16 md:ml-64">
+    <section className="relative h-[90vh] overflow-hidden ml-16 md:ml-64 mb-4">
       {/* Image Carousel with External Links */}
-      <div className="absolute inset-0">
+      <div>
         <AnimatePresence initial={false}>
           <motion.div
             key={currentImage}
@@ -80,14 +80,14 @@ const HeroSection = () => {
               href={carouselImages[currentImage].url} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="block w-full h-full"
+              className="block"
             >
               <div className="relative w-full h-full">
-                {/* Using regular img tag instead of Next.js Image component to avoid domain restrictions */}
+                {/* Using regular img tag with object-contain to prevent overshadowing */}
                 <img
                   src={carouselImages[currentImage].src}
                   alt={carouselImages[currentImage].alt}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-center"
                 />
               </div>
             </a>
@@ -98,8 +98,8 @@ const HeroSection = () => {
       {/* Subtle overlay for better contrast with navigation elements */}
       <div className="absolute inset-0 bg-black/30 z-0 pointer-events-none"></div>
       
-      {/* Navigation Dots */}
-      <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 z-20 flex space-x-3">
+      {/* Navigation Dots - Adjusted position */}
+      <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20 flex space-x-3">
         {carouselImages.map((_, index) => (
           <motion.button
             key={index}
@@ -113,9 +113,9 @@ const HeroSection = () => {
         ))}
       </div>
 
-      {/* Call to action button */}
+      {/* Call to action button - Adjusted position */}
       <motion.div
-        className="absolute z-10 bottom-32 left-1/2 transform -translate-x-1/2"
+        className="absolute z-10 bottom-28 left-1/2 transform -translate-x-1/2"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.8 }}
@@ -125,9 +125,9 @@ const HeroSection = () => {
         </button>
       </motion.div>
       
-      {/* Side navigation arrows */}
+      {/* Side navigation arrows - adjusted position to account for navbar */}
       <motion.button
-        className="absolute left-6 top-1/2 transform -translate-y-1/2 z-20 bg-black/30 p-3 rounded-full hover:bg-orange-500/80 transition-all duration-300"
+        className="absolute left-8 top-1/2 transform -translate-y-1/2 z-20 bg-black/30 p-3 rounded-full hover:bg-orange-500/80 transition-all duration-300"
         onClick={() => {
           setCurrentImage((prev) => (prev - 1 + carouselImages.length) % carouselImages.length);
           setIsAutoPlaying(false);
@@ -142,7 +142,7 @@ const HeroSection = () => {
       </motion.button>
       
       <motion.button
-        className="absolute right-6 top-1/2 transform -translate-y-1/2 z-20 bg-black/30 p-3 rounded-full hover:bg-orange-500/80 transition-all duration-300"
+        className="absolute right-8 top-1/2 transform -translate-y-1/2 z-20 bg-black/30 p-3 rounded-full hover:bg-orange-500/80 transition-all duration-300"
         onClick={() => {
           setCurrentImage((prev) => (prev + 1) % carouselImages.length);
           setIsAutoPlaying(false);
