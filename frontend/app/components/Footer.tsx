@@ -3,7 +3,7 @@
 
 // components/Footer.tsx
 import { motion } from 'framer-motion';
-import { Facebook, Twitter, Instagram, Twitch, Youtube, ArrowRight } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Twitch, Youtube, ArrowRight, Mail, MapPin, Phone } from 'lucide-react';
 
 const Footer = () => {
   const fadeInUp = {
@@ -12,57 +12,96 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-black text-white pt-16 pb-8 border-t border-orange-500/30 ml-16 md:ml-64">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer className="bg-black text-white pt-20 pb-8 border-t border-[#f77644]/30 ml-16 md:ml-64 relative overflow-hidden">
+      {/* Cyber background graphic */}
+      <div className="absolute inset-0 z-0 opacity-5">
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#f77644] to-transparent"></div>
+        <div className="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-[#f77644] to-transparent"></div>
+        <div className="absolute bottom-0 right-0 w-full h-px bg-gradient-to-r from-transparent via-[#f77644] to-transparent"></div>
+        <div className="absolute bottom-0 left-0 w-px h-full bg-gradient-to-b from-transparent to-[#f77644]"></div>
+        
+        {/* Grid lines */}
+        <div className="grid grid-cols-12 h-full">
+          {Array.from({ length: 12 }).map((_, i) => (
+            <div key={i} className="h-full border-r border-[#f77644]/10"></div>
+          ))}
+        </div>
+        <div className="grid grid-rows-12 w-full">
+          {Array.from({ length: 12 }).map((_, i) => (
+            <div key={i} className="w-full border-b border-[#f77644]/10"></div>
+          ))}
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
+        {/* Title section with orange accent */}
+        <div className="mb-16 text-center">
+          <div className="flex items-center justify-center mb-4">
+            <div className="h-px w-8 bg-[#f77644]"></div>
+            <span className="text-[#f77644] mx-3 text-sm uppercase tracking-widest">Stay Connected</span>
+            <div className="h-px w-8 bg-[#f77644]"></div>
+          </div>
+          <h2 className="text-3xl font-bold text-white mb-3 relative inline-block">
+            JOIN THE COMMUNITY
+            <div className="absolute -bottom-2 left-0 h-1 w-full bg-gradient-to-r from-[#f77644] via-[#f77644] to-[#f77644]"></div>
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
           {/* Logo and about */}
           <motion.div 
-            className="col-span-1 md:col-span-1"
+            className="col-span-1 md:col-span-4"
             initial="hidden"
             whileInView="visible"
             variants={fadeInUp}
             viewport={{ once: true }}
           >
             <div className="text-2xl font-bold mb-4">
-              <span className="text-orange-500">CRITICAL</span> PHOENIX
+              <span className="text-[#f77644]">CRITICAL</span> PHOENIX
             </div>
-            <p className="text-gray-400 mb-4">
-              Premier esports organization hosting tournaments and events for gamers worldwide.
+            <p className="text-gray-400 mb-6 border-l-2 border-[#f77644] pl-4">
+              Premier esports organization hosting tournaments and events for gamers worldwide. Join us to compete at the highest level and unlock your potential.
             </p>
-            <div className="flex space-x-4">
-              <motion.a href="#" whileHover={{ y: -3, color: '#ff4500' }} className="text-gray-400">
-                <Facebook size={20} />
-              </motion.a>
-              <motion.a href="#" whileHover={{ y: -3, color: '#ff4500' }} className="text-gray-400">
-                <Twitter size={20} />
-              </motion.a>
-              <motion.a href="#" whileHover={{ y: -3, color: '#ff4500' }} className="text-gray-400">
-                <Instagram size={20} />
-              </motion.a>
-              <motion.a href="#" whileHover={{ y: -3, color: '#ff4500' }} className="text-gray-400">
-                <Twitch size={20} />
-              </motion.a>
-              <motion.a href="#" whileHover={{ y: -3, color: '#ff4500' }} className="text-gray-400">
-                <Youtube size={20} />
-              </motion.a>
+            <div className="grid grid-cols-5 gap-3">
+              {[
+                { icon: <Facebook size={18} />, color: "#f77644" },
+                { icon: <Twitter size={18} />, color: "#f77644" },
+                { icon: <Instagram size={18} />, color: "#f77644" },
+                { icon: <Twitch size={18} />, color: "#f77644" },
+                { icon: <Youtube size={18} />, color: "#f77644" }
+              ].map((item, i) => (
+                <motion.a 
+                  key={i}
+                  href="#" 
+                  whileHover={{ y: -3, scale: 1.2 }} 
+                  className="bg-gray-800 h-10 w-10 rounded-lg flex items-center justify-center text-gray-400 hover:text-white transition-colors duration-300 border border-[#f77644]/20 hover:border-[#f77644]"
+                >
+                  {item.icon}
+                </motion.a>
+              ))}
             </div>
           </motion.div>
 
           {/* Quick links */}
           <motion.div 
-            className="col-span-1"
+            className="col-span-1 md:col-span-2"
             initial="hidden"
             whileInView="visible"
             variants={fadeInUp}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
           >
-            <h3 className="text-lg font-semibold mb-4 border-b border-orange-500/30 pb-2">Quick Links</h3>
-            <ul className="space-y-2">
+            <h3 className="text-lg font-semibold mb-4 border-b border-[#f77644]/30 pb-2 flex items-center">
+              <span className="mr-2 bg-[#f77644] h-4 w-1 rounded-full"></span>
+              Quick Links
+            </h3>
+            <ul className="space-y-3">
               {['Home', 'Tournaments', 'Games', 'About Us', 'Contact'].map((item, i) => (
                 <motion.li key={item} whileHover={{ x: 5 }}>
-                  <a href="#" className="text-gray-400 hover:text-orange-500 flex items-center">
-                    <ArrowRight size={14} className="mr-2 text-orange-500" /> {item}
+                  <a href="#" className="text-gray-400 hover:text-[#f77644] flex items-center group">
+                    <span className="w-0 group-hover:w-2 transition-all mr-0 group-hover:mr-2 duration-300 bg-[#f77644] h-px"></span>
+                    <ArrowRight size={14} className="mr-2 text-[#f77644]" /> 
+                    <span>{item}</span>
                   </a>
                 </motion.li>
               ))}
@@ -71,27 +110,119 @@ const Footer = () => {
 
           {/* Games */}
           <motion.div 
-            className="col-span-1"
+            className="col-span-1 md:col-span-2"
             initial="hidden"
             whileInView="visible"
             variants={fadeInUp}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
           >
-            <h3 className="text-lg font-semibold mb-4 border-b border-orange-500/30 pb-2">Games</h3>
-            <ul className="space-y-2">
+            <h3 className="text-lg font-semibold mb-4 border-b border-[#f77644]/30 pb-2 flex items-center">
+              <span className="mr-2 bg-[#f77644] h-4 w-1 rounded-full"></span>
+              Games
+            </h3>
+            <ul className="space-y-3">
               {['BGMI', 'Free Fire', 'Valorant', 'COD Mobile', 'PUBG', 'Fortnite'].map((item, i) => (
                 <motion.li key={item} whileHover={{ x: 5 }}>
-                  <a href="#" className="text-gray-400 hover:text-orange-500 flex items-center">
-                    <ArrowRight size={14} className="mr-2 text-orange-500" /> {item}
+                  <a href="#" className="text-gray-400 hover:text-[#f77644] flex items-center group">
+                    <span className="w-0 group-hover:w-2 transition-all mr-0 group-hover:mr-2 duration-300 bg-[#f77644] h-px"></span>
+                    <ArrowRight size={14} className="mr-2 text-[#f77644]" /> 
+                    <span>{item}</span>
                   </a>
                 </motion.li>
               ))}
             </ul>
           </motion.div>
 
-         
+          {/* Contact info */}
+          <motion.div 
+            className="col-span-1 md:col-span-4"
+            initial="hidden"
+            whileInView="visible"
+            variants={fadeInUp}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+          >
+            <h3 className="text-lg font-semibold mb-4 border-b border-[#f77644]/30 pb-2 flex items-center">
+              <span className="mr-2 bg-[#f77644] h-4 w-1 rounded-full"></span>
+              Contact Us
+            </h3>
+            <div className="bg-black/40 p-5 rounded-lg border border-[#f77644]/20">
+              <div className="space-y-4">
+                <div className="flex items-start">
+                  <div className="bg-[#f77644]/10 p-2 rounded-lg mr-3">
+                    <Mail size={18} className="text-[#f77644]" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-[#f77644] mb-1">EMAIL</p>
+                    <p className="text-gray-300">info@criticalphoenix.com</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start">
+                  <div className="bg-[#f77644]/10 p-2 rounded-lg mr-3">
+                    <MapPin size={18} className="text-[#f77644]" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-[#f77644] mb-1">ADDRESS</p>
+                    <p className="text-gray-300">123 Esports Arena, Gaming Street, GG 12345</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start">
+                  <div className="bg-[#f77644]/10 p-2 rounded-lg mr-3">
+                    <Phone size={18} className="text-[#f77644]" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-[#f77644] mb-1">PHONE</p>
+                    <p className="text-gray-300">+1 (555) 123-4567</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
+
+        {/* Newsletter subscription */}
+        <motion.div 
+          className="border border-[#f77644]/20 bg-black/30 rounded-lg p-6 mt-16 relative overflow-hidden"
+          initial="hidden"
+          whileInView="visible"
+          variants={fadeInUp}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+        >
+          {/* Cyber corner accents */}
+          <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-[#f77644]"></div>
+          <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-[#f77644]"></div>
+          <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-[#f77644]"></div>
+          <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-[#f77644]"></div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+            <div className="md:col-span-1">
+              <h3 className="text-lg font-bold text-white mb-1">JOIN OUR NEWSLETTER</h3>
+              <p className="text-gray-400 text-sm">Get the latest updates and offers</p>
+            </div>
+            <div className="md:col-span-2">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <div className="relative flex-grow">
+                  <input 
+                    type="email" 
+                    placeholder="Enter your email" 
+                    className="w-full py-3 px-4 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-[#f77644] text-white"
+                  />
+                </div>
+                <motion.button 
+                  className="bg-gradient-to-r from-[#f77644] to-[#f77644] py-3 px-6 rounded-lg font-medium text-white shadow-glow-orange flex-shrink-0"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  SUBSCRIBE
+                </motion.button>
+              </div>
+            </div>
+          </div>
+        </motion.div>
 
         <motion.div 
           className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400 text-sm"
@@ -99,11 +230,21 @@ const Footer = () => {
           whileInView="visible"
           variants={fadeInUp}
           viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
+          transition={{ delay: 0.6 }}
         >
           <p>© {new Date().getFullYear()} Critical Phoenix. All rights reserved.</p>
         </motion.div>
       </div>
+
+      {/* Extra styles */}
+      <style jsx>{`
+        .shadow-glow-orange {
+          box-shadow: 0 0 15px rgba(247, 118, 68, 0.3);
+        }
+        .grid-rows-12 {
+          grid-template-rows: repeat(12, 1fr);
+        }
+      `}</style>
     </footer>
   );
 };

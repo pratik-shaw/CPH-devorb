@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -41,9 +43,9 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Mobile menu toggle */}
+      {/* Mobile menu toggle with subtle glow effect */}
       <motion.button
-        className="fixed top-4 left-4 z-50 p-2 bg-black text-orange-500 rounded-full md:hidden"
+        className="fixed top-4 left-4 z-50 p-2 bg-black border border-white text-white rounded-full md:hidden shadow-glow-accent"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(!isOpen)}
@@ -51,26 +53,30 @@ const Navbar = () => {
         {isOpen ? <X size={24} /> : <Menu size={24} />}
       </motion.button>
 
-      {/* Navbar */}
+      {/* Navbar with updated black & white design */}
       <motion.nav 
-        className="fixed left-0 top-0 h-full bg-black z-40 shadow-xl shadow-orange-500/20"
+        className="fixed left-0 top-0 h-full bg-black z-40 border-r border-white/10 shadow-xl"
         initial={isMobile ? "closed" : "open"}
         animate={isOpen ? "open" : "closed"}
         variants={navVariants}
       >
         <div className="flex flex-col h-full py-16 w-64">
-          <div className="px-4 mb-8">
+          {/* Logo section with accent color */}
+          <div className="px-6 mb-10">
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
-              className="text-white font-bold text-xl"
+              className="relative"
             >
-              <span className="text-orange-500">CRITICAL</span> PHOENIX
+              <h1 className="text-white font-bold text-2xl">
+                <span className="text-accent">CRITICAL</span> PHOENIX
+              </h1>
+              <div className="absolute -bottom-2 left-0 h-px w-full bg-gradient-to-r from-transparent via-accent to-transparent"></div>
             </motion.div>
           </div>
           
-          <ul className="space-y-2 px-4 flex-1">
+          <ul className="space-y-1 px-4 flex-1">
             {navLinks.map((link, index) => (
               <motion.li key={link.title}
                 initial={{ opacity: 0, x: -20 }}
@@ -79,33 +85,73 @@ const Navbar = () => {
               >
                 <Link href={link.href}>
                   <motion.div 
-                    className="flex items-center space-x-3 p-3 rounded-lg text-gray-300 hover:bg-gray-800 hover:text-orange-500 group"
+                    className="flex items-center space-x-3 p-3 rounded-lg text-white/80 hover:bg-white/5 hover:text-white group relative overflow-hidden"
                     whileHover={{ x: 5 }}
                     whileTap={{ scale: 0.97 }}
                   >
+                    {/* Hover gradient effect */}
                     <motion.div 
-                      className="text-orange-500 group-hover:scale-110"
+                      className="absolute inset-0 bg-gradient-to-r from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                    />
+                    
+                    <motion.div 
+                      className="relative z-10 text-accent group-hover:text-accent group-hover:scale-110"
                       whileHover={{ rotate: 5 }}
                     >
                       {link.icon}
                     </motion.div>
-                    <span>{link.title}</span>
+                    <span className="relative z-10 font-medium">{link.title}</span>
                   </motion.div>
                 </Link>
               </motion.li>
             ))}
           </ul>
           
+          {/* Sign in button with subtle effect */}
           <div className="mt-auto px-4 pb-8">
             <motion.button 
-              className="w-full py-2 px-4 bg-orange-500 text-black font-bold rounded-lg"
-              whileHover={{ scale: 1.05 }}
+              className="w-full py-3 px-4 bg-black text-white font-bold rounded-lg group relative overflow-hidden border border-white/20 shadow-glow-accent-sm"
+              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.95 }}
             >
-              SIGN IN
+              {/* Button shine effect */}
+              <motion.div 
+                className="absolute inset-0 w-20 h-full bg-accent/20 skew-x-30 translate-x-[-150%] group-hover:translate-x-[200%] transition-all duration-1000"
+                initial={{ x: '-150%' }}
+                whileHover={{ x: '200%' }}
+                transition={{ repeat: Infinity, duration: 1.5 }}
+              />
+              <span className="relative z-10 tracking-wider">SIGN IN</span>
             </motion.button>
           </div>
         </div>
+
+        {/* Extra styles */}
+        <style jsx>{`
+          :root {
+            --accent-color: #f77644;
+          }
+          .text-accent {
+            color: var(--accent-color);
+          }
+          .bg-accent {
+            background-color: var(--accent-color);
+          }
+          .border-accent {
+            border-color: var(--accent-color);
+          }
+          .shadow-glow-accent {
+            box-shadow: 0 0 15px rgba(247, 118, 68, 0.3);
+          }
+          .shadow-glow-accent-sm {
+            box-shadow: 0 0 10px rgba(247, 118, 68, 0.15);
+          }
+          .skew-x-30 {
+            transform: skewX(30deg);
+          }
+        `}</style>
       </motion.nav>
     </>
   );
