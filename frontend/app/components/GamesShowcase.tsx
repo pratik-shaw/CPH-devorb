@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import Image from "next/image";
 
 // Sample games data
@@ -19,12 +20,14 @@ const games = [
 const GamesShowcase = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
   const [cardWidth, setCardWidth] = useState(240);
   const [visibleCards, setVisibleCards] = useState(4);
   const [isMobile, setIsMobile] = useState(false);
   const [activeFilter, setActiveFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredGames, setFilteredGames] = useState(games);
+  const controls = useAnimation();
   
   // Define accent color to match tournaments section
   const accentColor = "#f77644";
@@ -45,15 +48,30 @@ const GamesShowcase = () => {
     
     setFilteredGames(filtered);
     setCurrentIndex(0);
+    // Reset scroll position
+    if (carouselRef.current) {
+      carouselRef.current.scrollLeft = 0;
+    }
   }, [searchQuery, activeFilter]);
 
   const scrollToIndex = (index: number) => {
-    if (index < 0) {
-      setCurrentIndex(filteredGames.length - visibleCards);
-    } else if (index > filteredGames.length - visibleCards) {
-      setCurrentIndex(0);
-    } else {
-      setCurrentIndex(index);
+    // Properly handle index bounds
+    let targetIndex = index;
+    if (targetIndex < 0) {
+      targetIndex = 0;
+    } else if (targetIndex > filteredGames.length - visibleCards) {
+      targetIndex = Math.max(0, filteredGames.length - visibleCards);
+    }
+
+    setCurrentIndex(targetIndex);
+
+    if (carouselRef.current) {
+      // Use the same smooth scroll for both mobile and desktop
+      const scrollPos = targetIndex * (cardWidth + (isMobile ? 16 : 24));
+      carouselRef.current.scrollTo({
+        left: scrollPos,
+        behavior: 'smooth'
+      });
     }
   };
 
@@ -76,7 +94,7 @@ const GamesShowcase = () => {
       // Adjust card width based on container size
       const navbarWidth = windowWidth < 768 ? 0 : 64;
       const containerWidth = (containerRef.current?.offsetWidth || windowWidth) - navbarWidth;
-      const gap = 16;
+      const gap = windowWidth < 768 ? 16 : 24;
       const newCardWidth = Math.min(240, (containerWidth - gap * (visibleCards - 1)) / visibleCards);
       setCardWidth(newCardWidth);
     };
@@ -207,12 +225,13 @@ const GamesShowcase = () => {
         </div>
 
         <div className="relative">
-          {/* Previous arrow button */}
+          {/* Previous arrow button - now visible on all devices */}
           <button
             className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-20 bg-gray-900 p-3 md:p-4 rounded-r-lg border hover:bg-gray-800 transition-all duration-300 focus:outline-none ${
-              isMobile || filteredGames.length <= visibleCards ? "hidden" : "block"
+              filteredGames.length <= visibleCards || currentIndex <= 0 ? "opacity-50 cursor-not-allowed" : ""
             }`}
             onClick={() => scrollToIndex(currentIndex - 1)}
+            disabled={filteredGames.length <= visibleCards || currentIndex <= 0}
             aria-label="Previous games"
             style={{ borderColor: accentColor }}
           >
@@ -233,21 +252,24 @@ const GamesShowcase = () => {
             </svg>
           </button>
 
-          {/* Games container */}
-          <div className="overflow-hidden mx-2 md:mx-12" ref={containerRef}>
+          {/* Games container with unified approach for both mobile and desktop */}
+          <div 
+            className="overflow-hidden mx-2 md:mx-12" 
+            ref={containerRef}
+          >
             {filteredGames.length > 0 ? (
-              <motion.div
-                className="flex gap-4 md:gap-6"
-                animate={{ x: -currentIndex * (cardWidth + (isMobile ? 16 : 24)) }}
-                transition={{ type: "spring", stiffness: 250, damping: 30 }}
+              <div 
+                ref={carouselRef}
+                className="flex gap-4 md:gap-6 overflow-x-hidden scroll-smooth"
+                style={{
+                  scrollBehavior: 'smooth',
+                }}
               >
                 {filteredGames.map((game) => (
-                  <motion.div
+                  <div
                     key={game.id}
                     className="bg-gray-900 rounded overflow-hidden relative group flex-shrink-0"
                     style={{ width: `${cardWidth}px` }}
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
                   >
                     {/* Game banner image */}
                     <div className="h-80 relative overflow-hidden">
@@ -294,9 +316,9 @@ const GamesShowcase = () => {
                         </svg>
                       </motion.button>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
-              </motion.div>
+              </div>
             ) : (
               <div className="text-center py-16 bg-gray-900 rounded my-8">
                 <svg className="mx-auto w-12 h-12 text-gray-700 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -308,12 +330,22 @@ const GamesShowcase = () => {
             )}
           </div>
 
-          {/* Next arrow button */}
+          {/* Navigation helper text for mobile */}
+          {isMobile && filteredGames.length > visibleCards && (
+            <div className="mt-4 flex justify-center items-center">
+              <div className="text-gray-400 text-xs flex items-center">
+                <span>Use arrows to navigate</span>
+              </div>
+            </div>
+          )}
+
+          {/* Next arrow button - now visible on all devices */}
           <button
             className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-20 bg-gray-900 p-3 md:p-4 rounded-l-lg border hover:bg-gray-800 transition-all duration-300 focus:outline-none ${
-              isMobile || filteredGames.length <= visibleCards ? "hidden" : "block"
+              filteredGames.length <= visibleCards || currentIndex >= filteredGames.length - visibleCards ? "opacity-50 cursor-not-allowed" : ""
             }`}
             onClick={() => scrollToIndex(currentIndex + 1)}
+            disabled={filteredGames.length <= visibleCards || currentIndex >= filteredGames.length - visibleCards}
             aria-label="Next games"
             style={{ borderColor: accentColor }}
           >

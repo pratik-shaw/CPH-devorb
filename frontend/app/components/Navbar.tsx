@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -43,17 +44,35 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Mobile menu toggle with subtle glow effect */}
-      <motion.button
-        className="fixed top-4 left-4 z-50 p-2 bg-black border border-white text-white rounded-full md:hidden shadow-glow-accent"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        {isOpen ? <X size={24} /> : <Menu size={24} />}
-      </motion.button>
+      {/* Mobile Horizontal Navbar - Only shown on mobile */}
+      <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-transparent">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo on the left */}
+            <div className="h-10 relative">
+              <img 
+                src="https://criticalphoenix.in/public/cph-1@2x.png" 
+                alt="Critical Phoenix Logo" 
+                className="h-full object-contain object-left"
+              />
+            </div>
+            
+            {/* Menu button on the right */}
+            <motion.button
+              className="p-2 bg-black border border-white text-white rounded-full shadow-glow-accent"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </motion.button>
+          </div>
+        </div>
+      </div>
 
-      {/* Navbar with updated black & white design */}
+      {/* Removed the fixed mobile menu button since it's now in the navbar */}
+
+      {/* Navbar with updated black & white design - Original desktop version */}
       <motion.nav 
         className="fixed left-0 top-0 h-full bg-black z-40 border-r border-white/10 shadow-xl"
         initial={isMobile ? "closed" : "open"}
@@ -69,9 +88,14 @@ const Navbar = () => {
               transition={{ delay: 0.2 }}
               className="relative"
             >
-              <h1 className="text-white font-bold text-2xl">
-                <span className="text-accent">CRITICAL</span> PHOENIX
-              </h1>
+              {/* Using regular img tag instead of Next.js Image component */}
+              <div className="h-12 relative">
+                <img 
+                  src="https://criticalphoenix.in/public/cph-1@2x.png" 
+                  alt="Critical Phoenix Logo" 
+                  className="h-full object-contain object-left"
+                />
+              </div>
               <div className="absolute -bottom-2 left-0 h-px w-full bg-gradient-to-r from-transparent via-accent to-transparent"></div>
             </motion.div>
           </div>
@@ -85,7 +109,7 @@ const Navbar = () => {
               >
                 <Link href={link.href}>
                   <motion.div 
-                    className="flex items-center space-x-3 p-3 rounded-lg text-white/80 hover:bg-white/5 hover:text-white group relative overflow-hidden"
+                    className="flex items-center space-x-3 p-3 text-white/80 hover:bg-black hover:text-white group relative overflow-hidden"
                     whileHover={{ x: 5 }}
                     whileTap={{ scale: 0.97 }}
                   >
@@ -95,6 +119,12 @@ const Navbar = () => {
                       initial={{ opacity: 0 }}
                       whileHover={{ opacity: 1 }}
                     />
+                    
+                    {/* Cyber corner accents - only visible on hover */}
+                    <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-[#f77644] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-[#f77644] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-[#f77644] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-[#f77644] opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     
                     <motion.div 
                       className="relative z-10 text-accent group-hover:text-accent group-hover:scale-110"

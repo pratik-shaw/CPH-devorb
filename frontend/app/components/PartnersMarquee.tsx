@@ -98,7 +98,7 @@ const PartnersMarquee: React.FC = () => {
                 <img
                   src={partner.logo}
                   alt={partner.name}
-                  className="max-w-full max-h-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+                  className="max-w-full max-h-full object-contain"
                   loading="lazy"
                   width={80}
                   height={50}
