@@ -54,7 +54,7 @@ const PartnersMarquee: React.FC = () => {
   }
 
   return (
-    <section className="bg-black px-4 md:px-8 md:ml-0 lg:ml-16 xl:ml-64">
+    <section className="bg-black px-4 md:px-8 md:ml-0 lg:ml-16 xl:ml-64 pt-4">
         <div className="max-w-6xl mx-auto" ref={containerRef}>
         {/* Section title - matching games showcase style */}
         <div className="mb-8">

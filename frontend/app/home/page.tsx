@@ -1,4 +1,4 @@
-// app/home/page.tsx
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useEffect, useState } from 'react';
@@ -30,6 +30,7 @@ const TournamentsSection = dynamic(() => import('@/app/components/TournamentsSec
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -39,9 +40,27 @@ export default function Home() {
   });
 
   useEffect(() => {
-    setMounted(true);
-    // Rest of your useEffect code...
+    const loadTimer = setTimeout(() => {
+      setMounted(true);
+      setIsLoading(false);
+    }, 2000); // 2 seconds loading time
+
+    return () => clearTimeout(loadTimer);
   }, []);
+
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 bg-black flex items-center justify-center z-50">
+        <div className="animate-pulse">
+          <img 
+            src="https://criticalphoenix.in/public/cph-1@2x.png" 
+            alt="Critical Phoenix Logo" 
+            className="max-w-[200px] max-h-[200px] object-contain"
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <main className="flex flex-col min-h-screen bg-black text-white">
@@ -74,9 +93,6 @@ export default function Home() {
           <Footer />
         </div>
       </div>
-      
-      {/* Mobile menu and cursor code */}
-      {/* ... */}
     </main>
   );
 }

@@ -168,9 +168,9 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.8 }}
         >
-          <button className="px-8 py-4 bg-orange-500 text-white font-bold text-lg rounded-md hover:bg-orange-600 transition-all duration-300 transform hover:scale-105">
-            JOIN THE ELITE
-          </button>
+          <button className="px-8 py-4 bg-black/50 backdrop-blur-md text-orange-500 font-bold text-lg hover:bg-black/60 transition-all duration-300 transform hover:scale-105">
+        JOIN THE ELITE
+      </button>
         </motion.div>
         
         {/* Side navigation arrows - adjusted position to account for navbar */}
@@ -260,9 +260,9 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.5 }}
         >
-          <button className="w-full py-3 bg-orange-500 text-white font-bold text-base rounded-md hover:bg-orange-600 transition-all duration-300">
-            JOIN THE ELITE
-          </button>
+          <button className="w-full py-3 bg-black/50 backdrop-blur-md text-orange-500 font-bold text-base hover:bg-black/60 transition-all duration-300">
+      JOIN THE ELITE
+    </button>
         </motion.div>
         
         {/* Mobile swipe navigation arrows */}
