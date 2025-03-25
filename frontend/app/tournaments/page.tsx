@@ -9,59 +9,59 @@ import Link from 'next/link';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 
-// Tournament data 
+// Tournament data (unchanged from previous version)
 const tournaments = [
-  { 
-    id: 1, 
-    title: 'BGMI Pro League Season 5', 
-    game: 'BGMI', 
-    poster: 'https://theesports.club/_next/image?url=https%3A%2F%2Fcdn.theesports.club%2FSmall%2520Banner-de510037-1c22-4ba7-a3e8-968bb03d7384.png&w=3840&q=75',
-    prize: '$50,000',
-    date: '2025-04-15',
-    participants: 128,
-    status: 'Upcoming'
-  },
-  { 
-    id: 2, 
-    title: 'Free Fire World Series', 
-    game: 'Free Fire', 
-    poster: 'https://theesports.club/_next/image?url=https%3A%2F%2Fcdn.theesports.club%2FSmall%2520Banner-de510037-1c22-4ba7-a3e8-968bb03d7384.png&w=3840&q=75',
-    prize: '$100,000',
-    date: '2025-05-20',
-    participants: 256,
-    status: 'Registration Open'
-  },
-  { 
-    id: 3, 
-    title: 'VALORANT Champions League', 
-    game: 'Valorant', 
-    poster: 'https://theesports.club/_next/image?url=https%3A%2F%2Fcdn.theesports.club%2FSmall%2520Banner-de510037-1c22-4ba7-a3e8-968bb03d7384.png&w=3840&q=75',
-    prize: '$75,000',
-    date: '2025-03-10',
-    participants: 64,
-    status: 'Live'
-  },
-  { 
-    id: 4, 
-    title: 'CS:GO Masters Tournament', 
-    game: 'CS:GO', 
-    poster: 'https://theesports.club/_next/image?url=https%3A%2F%2Fcdn.theesports.club%2FSmall%2520Banner-de510037-1c22-4ba7-a3e8-968bb03d7384.png&w=3840&q=75',
-    prize: '$90,000',
-    date: '2025-06-05',
-    participants: 128,
-    status: 'Upcoming'
-  },
-  { 
-    id: 5, 
-    title: 'League of Legends Global Series', 
-    game: 'League of Legends', 
-    poster: 'https://theesports.club/_next/image?url=https%3A%2F%2Fcdn.theesports.club%2FSmall%2520Banner-de510037-1c22-4ba7-a3e8-968bb03d7384.png&w=3840&q=75',
-    prize: '$150,000',
-    date: '2025-04-25',
-    participants: 192,
-    status: 'Registration Open'
-  }
-];
+    { 
+      id: 1, 
+      title: 'BGMI Pro League Season 5', 
+      game: 'BGMI', 
+      poster: 'https://theesports.club/_next/image?url=https%3A%2F%2Fcdn.theesports.club%2FSmall%2520Banner-de510037-1c22-4ba7-a3e8-968bb03d7384.png&w=3840&q=75',
+      prize: '$50,000',
+      date: '2025-04-15',
+      participants: 128,
+      status: 'Upcoming'
+    },
+    { 
+      id: 2, 
+      title: 'Free Fire World Series', 
+      game: 'Free Fire', 
+      poster: 'https://theesports.club/_next/image?url=https%3A%2F%2Fcdn.theesports.club%2FSmall%2520Banner-de510037-1c22-4ba7-a3e8-968bb03d7384.png&w=3840&q=75',
+      prize: '$100,000',
+      date: '2025-05-20',
+      participants: 256,
+      status: 'Registration Open'
+    },
+    { 
+      id: 3, 
+      title: 'VALORANT Champions League', 
+      game: 'Valorant', 
+      poster: 'https://theesports.club/_next/image?url=https%3A%2F%2Fcdn.theesports.club%2FSmall%2520Banner-de510037-1c22-4ba7-a3e8-968bb03d7384.png&w=3840&q=75',
+      prize: '$75,000',
+      date: '2025-03-10',
+      participants: 64,
+      status: 'Live'
+    },
+    { 
+      id: 4, 
+      title: 'CS:GO Masters Tournament', 
+      game: 'CS:GO', 
+      poster: 'https://theesports.club/_next/image?url=https%3A%2F%2Fcdn.theesports.club%2FSmall%2520Banner-de510037-1c22-4ba7-a3e8-968bb03d7384.png&w=3840&q=75',
+      prize: '$90,000',
+      date: '2025-06-05',
+      participants: 128,
+      status: 'Upcoming'
+    },
+    { 
+      id: 5, 
+      title: 'League of Legends Global Series', 
+      game: 'League of Legends', 
+      poster: 'https://theesports.club/_next/image?url=https%3A%2F%2Fcdn.theesports.club%2FSmall%2520Banner-de510037-1c22-4ba7-a3e8-968bb03d7384.png&w=3840&q=75',
+      prize: '$150,000',
+      date: '2025-04-25',
+      participants: 192,
+      status: 'Registration Open'
+    }
+  ];
 
 const TournamentsPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -107,14 +107,14 @@ const TournamentsPage: React.FC = () => {
 
   return (
     <div className="bg-black min-h-screen text-white flex flex-col">
-      <div className="flex flex-1">
-        {/* Vertical Navbar */}
+      <div className="flex flex-1 relative">
+        {/* Mobile-friendly Navbar */}
         <Navbar />
 
-        {/* Main Content Area with Left Margin to Accommodate Navbar */}
-        <div className="flex-1 ml-16 md:ml-64 flex flex-col">
+        {/* Main Content Area - Fully Responsive */}
+        <div className="flex-1 w-full md:ml-16 lg:ml-64 flex flex-col">
           <main className="flex-grow">
-            {/* Hero Section */}
+            {/* Hero Section - Mobile Responsive */}
             <motion.div 
               initial={{ opacity: 0, y: -50 }}
               animate={{ opacity: 1, y: 0 }}
@@ -147,17 +147,17 @@ const TournamentsPage: React.FC = () => {
               </div>
             </motion.div>
 
-            {/* Tournaments Section */}
+            {/* Tournaments Section - Full Mobile Responsiveness */}
             <div className="container mx-auto px-4 py-4">
-              {/* Filter and Search Controls */}
+              {/* Filter and Search Controls - Mobile Optimized */}
               <motion.div 
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
                 className="mb-12"
               >
-                {/* Status Filter Tabs */}
-                <div className="flex overflow-x-auto md:overflow-visible border-b border-gray-800 pb-1">
+                {/* Status Filter Tabs - Horizontal Scroll on Mobile */}
+                <div className="flex overflow-x-auto space-x-3 md:space-x-0 md:overflow-visible border-b border-gray-800 pb-1 scrollbar-hide">
                   {['all', 'live', 'registration', 'upcoming'].map((filter) => (
                     <motion.button
                       key={filter}
@@ -181,9 +181,9 @@ const TournamentsPage: React.FC = () => {
                   ))}
                 </div>
 
-                {/* Search and Sort Controls */}
-                <div className="flex flex-col md:flex-row gap-4 mt-8 mb-10">
-                  <div className="relative w-full md:w-2/3 bg-gray-900 rounded overflow-hidden border border-transparent hover:border-orange-500 transition-all duration-200">
+                {/* Search and Sort Controls - Stacked on Mobile */}
+                <div className="flex flex-col gap-4 mt-8 mb-10">
+                  <div className="relative w-full bg-gray-900 rounded overflow-hidden border border-transparent hover:border-orange-500 transition-all duration-200">
                     <input
                       type="text"
                       placeholder="Search tournaments by name or game..."
@@ -209,7 +209,7 @@ const TournamentsPage: React.FC = () => {
                     </svg>
                   </div>
 
-                  <div className="relative w-full md:w-1/3 bg-gray-900 rounded overflow-hidden border border-transparent hover:border-orange-500 transition-all duration-200">
+                  <div className="relative w-full bg-gray-900 rounded overflow-hidden border border-transparent hover:border-orange-500 transition-all duration-200">
                     <select
                       className="w-full bg-transparent text-white py-3 px-4 appearance-none focus:outline-none text-sm"
                       value={sortBy}
@@ -228,12 +228,12 @@ const TournamentsPage: React.FC = () => {
                 </div>
               </motion.div>
 
-              {/* Tournaments Grid */}
+              {/* Tournaments Grid - Flexible Columns */}
               <motion.div 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
               >
                 {visibleTournaments.map((tournament) => (
                   <motion.div
@@ -245,7 +245,8 @@ const TournamentsPage: React.FC = () => {
                       border: `1px solid ${accentColor}`
                     }}
                   >
-                    {/* Status indicator with improved positioning and contrast */}
+                    {/* Tournament card content remains the same */}
+                    {/* Status indicator */}
                     {tournament.status === 'Live' && (
                       <div className="absolute top-3 right-3 z-20 bg-white rounded-sm px-2 py-1 flex items-center">
                         <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping mr-1.5"></div>
@@ -263,7 +264,7 @@ const TournamentsPage: React.FC = () => {
                       </div>
                     )}
 
-                    {/* Tournament image with consistent sizing */}
+                    {/* Tournament image with responsive sizing */}
                     <div className="h-40 relative overflow-hidden">
                       <img
                         src={tournament.poster}
@@ -272,7 +273,7 @@ const TournamentsPage: React.FC = () => {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
                       
-                      {/* Game badge with cleaner design */}
+                      {/* Game badge */}
                       <div className="absolute bottom-3 left-3 z-10">
                         <div className="bg-black text-white px-2 py-1 text-xs font-medium" style={{ borderLeft: `2px solid ${accentColor}` }}>
                           {tournament.game}
@@ -280,11 +281,11 @@ const TournamentsPage: React.FC = () => {
                       </div>
                     </div>
                     
-                    {/* Tournament details with improved typography hierarchy */}
+                    {/* Tournament details */}
                     <div className="p-4">
                       <h3 className="text-base font-bold text-white mb-3 line-clamp-1">{tournament.title}</h3>
                       
-                      {/* Info grid with more space-efficient layout */}
+                      {/* Info grid */}
                       <div className="grid grid-cols-2 gap-3 mb-4">
                         <div className="bg-black p-2.5 rounded">
                           <p className="text-xs text-gray-400 mb-1">PRIZE POOL</p>
@@ -302,7 +303,7 @@ const TournamentsPage: React.FC = () => {
                         </div>
                       </div>
                       
-                      {/* Participants with minimal progress bar */}
+                      {/* Participants */}
                       <div className="mb-4">
                         <div className="flex justify-between text-xs mb-1.5">
                           <span className="text-gray-400">PARTICIPANTS</span>
@@ -319,7 +320,7 @@ const TournamentsPage: React.FC = () => {
                         </div>
                       </div>
                       
-                      {/* Clean, minimal register button */}
+                      {/* Register button */}
                       <motion.button
                         className="w-full py-2.5 text-white font-medium text-sm flex items-center justify-center transition-colors duration-200"
                         style={{ 
