@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Menu, X, Home, Calendar, Gamepad, Trophy, Users, Info, Mail } from 'lucide-react';
+import { Menu, X, Home, Gamepad, Trophy, Users, Info, Mail, AlarmClock, TicketCheck } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,8 +25,9 @@ const Navbar = () => {
     { title: 'Home', href: '/', icon: <Home /> },
     { title: 'Tournaments', href: '/tournaments', icon: <Trophy /> },
     { title: 'Games', href: '/games', icon: <Gamepad /> },
-    { title: 'Schedule', href: '/schedule', icon: <Calendar /> },
-    { title: 'Teams', href: '/teams', icon: <Users /> },
+    { title: 'Announcements', href: '/announcements', icon: <AlarmClock/> },
+    { title: 'Events', href: '/events', icon: <TicketCheck /> },
+    { title: 'Leaderboard', href: '/leaderboard', icon: <Users /> },
     { title: 'About', href: '/about', icon: <Info /> },
     { title: 'Contact', href: '/contact', icon: <Mail /> },
   ];
