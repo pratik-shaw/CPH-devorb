@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @next/next/no-img-element */
 "use client"
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
@@ -63,9 +64,36 @@ const announcements = [
 const AnnouncementsPage: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [mounted, setMounted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Accent color
   const accentColor = "#f77644";
+
+  // Loading screen effect
+  useEffect(() => {
+    const loadTimer = setTimeout(() => {
+      setMounted(true);
+      setIsLoading(false);
+    }, 2000); // 2 seconds loading time
+
+    return () => clearTimeout(loadTimer);
+  }, []);
+
+  // Loading screen
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 bg-black flex items-center justify-center z-50">
+        <div className="animate-pulse">
+          <img 
+            src="https://criticalphoenix.in/public/cph-1@2x.png" 
+            alt="Critical Phoenix Logo" 
+            className="max-w-[200px] max-h-[200px] object-contain"
+          />
+        </div>
+      </div>
+    );
+  }
 
   // Filter and search logic
   const filteredAnnouncements = announcements.filter(announcement => {

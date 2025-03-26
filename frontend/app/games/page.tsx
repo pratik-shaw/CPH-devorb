@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 
 /* eslint-disable @next/next/no-img-element */
@@ -60,6 +61,8 @@ const GamesPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState('all');
   const [visibleGames, setVisibleGames] = useState(games);
+  const [mounted, setMounted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Accent color
   const accentColor = "#f77644";
@@ -84,6 +87,31 @@ const GamesPage: React.FC = () => {
     const processed = processedGames();
     setVisibleGames(processed);
   }, [searchQuery, activeFilter]);
+
+  // Loading screen effect
+  useEffect(() => {
+    const loadTimer = setTimeout(() => {
+      setMounted(true);
+      setIsLoading(false);
+    }, 2000); // 2 seconds loading time
+
+    return () => clearTimeout(loadTimer);
+  }, []);
+
+  // Loading screen
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 bg-black flex items-center justify-center z-50">
+        <div className="animate-pulse">
+          <img 
+            src="https://criticalphoenix.in/public/cph-1@2x.png" 
+            alt="Critical Phoenix Logo" 
+            className="max-w-[200px] max-h-[200px] object-contain"
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-black min-h-screen text-white flex flex-col">

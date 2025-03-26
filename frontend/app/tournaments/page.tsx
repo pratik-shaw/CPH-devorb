@@ -9,6 +9,17 @@ import Link from 'next/link';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
 
+type Tournament = { 
+  id: number; 
+  title: string; 
+  game: string; 
+  poster: string; 
+  prize: string; 
+  date: string; 
+  participants: number; 
+  status: string; 
+};
+
 // Tournament data (unchanged from previous version)
 const tournaments = [
     { 
@@ -63,47 +74,74 @@ const tournaments = [
     }
   ];
 
-const TournamentsPage: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeFilter, setActiveFilter] = useState('all');
-  const [sortBy, setSortBy] = useState('date');
-  const [visibleTournaments, setVisibleTournaments] = useState(tournaments);
-  const [isShowingAll, setIsShowingAll] = useState(false);
-
-  // Accent color
-  const accentColor = "#f77644";
-
-  // Process tournaments based on search, sort, and filter criteria
-  const processedTournaments = () => {
-    const filtered = tournaments.filter(tournament => {
-      const matchesSearch = tournament.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           tournament.game.toLowerCase().includes(searchQuery.toLowerCase());
-      
-      const matchesFilter = activeFilter === 'all' || 
-                           (activeFilter === 'live' && tournament.status === 'Live') ||
-                           (activeFilter === 'registration' && tournament.status === 'Registration Open') ||
-                           (activeFilter === 'upcoming' && tournament.status === 'Upcoming');
-      
-      return matchesSearch && matchesFilter;
-    });
-
-    return [...filtered].sort((a, b) => {
-      if (sortBy === 'date') {
-        return new Date(a.date).getTime() - new Date(b.date).getTime();
-      } else if (sortBy === 'prize') {
-        return parseInt(b.prize.replace(/\D/g, '')) - parseInt(a.prize.replace(/\D/g, ''));
-      } else if (sortBy === 'participants') {
-        return b.participants - a.participants;
-      }
-      return 0;
-    });
-  };
-
-  // Update visible tournaments when search, sort, or filter changes
-  useEffect(() => {
-    const processed = processedTournaments();
-    setVisibleTournaments(processed);
-  }, [searchQuery, sortBy, activeFilter]);
+  const TournamentsPage: React.FC = () => {
+    const [searchQuery, setSearchQuery] = useState('');
+    const [activeFilter, setActiveFilter] = useState('all');
+    const [sortBy, setSortBy] = useState('date');
+    const [visibleTournaments, setVisibleTournaments] = useState<Tournament[]>(tournaments);
+    const [isShowingAll, setIsShowingAll] = useState(false);
+    const [mounted, setMounted] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+  
+    // Accent color
+    const accentColor = "#f77644";
+  
+    // Process tournaments based on search, sort, and filter criteria
+    const processedTournaments = (): Tournament[] => {
+      const filtered = tournaments.filter(tournament => {
+        const matchesSearch = tournament.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                             tournament.game.toLowerCase().includes(searchQuery.toLowerCase());
+        
+        const matchesFilter = activeFilter === 'all' || 
+                             (activeFilter === 'live' && tournament.status === 'Live') ||
+                             (activeFilter === 'registration' && tournament.status === 'Registration Open') ||
+                             (activeFilter === 'upcoming' && tournament.status === 'Upcoming');
+        
+        return matchesSearch && matchesFilter;
+      });
+  
+      return [...filtered].sort((a, b) => {
+        if (sortBy === 'date') {
+          return new Date(a.date).getTime() - new Date(b.date).getTime();
+        } else if (sortBy === 'prize') {
+          return parseInt(b.prize.replace(/\D/g, '')) - parseInt(a.prize.replace(/\D/g, ''));
+        } else if (sortBy === 'participants') {
+          return b.participants - a.participants;
+        }
+        return 0;
+      });
+    };
+  
+    // Update visible tournaments when search, sort, or filter changes
+    useEffect(() => {
+      const processed = processedTournaments();
+      setVisibleTournaments(processed);
+    }, [searchQuery, sortBy, activeFilter]);
+  
+    // Loading screen effect
+    useEffect(() => {
+      const loadTimer = setTimeout(() => {
+        setMounted(true);
+        setIsLoading(false);
+      }, 2000); // 2 seconds loading time
+  
+      return () => clearTimeout(loadTimer);
+    }, []);
+  
+    // Loading screen
+    if (isLoading) {
+      return (
+        <div className="fixed inset-0 bg-black flex items-center justify-center z-50">
+          <div className="animate-pulse">
+            <img 
+              src="https://criticalphoenix.in/public/cph-1@2x.png" 
+              alt="Critical Phoenix Logo" 
+              className="max-w-[200px] max-h-[200px] object-contain"
+            />
+          </div>
+        </div>
+      );
+    }
 
   return (
     <div className="bg-black min-h-screen text-white flex flex-col">
